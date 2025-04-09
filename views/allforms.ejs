@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Saved Forms</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding: 20px;
+    }
+    .card {
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2 class="text-center mb-4">Saved Forms</h2>
+    <a href="/" class="btn btn-info mb-4">🏠 create form</a>
+
+    <% if (forms && forms.length > 0) { %>
+      <% forms.forEach(function(form) { %>
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title"><%= form.fields[0] || 'Untitled Form' %></h5>
+            <p class="card-text">Form ID: <%= form.id %></p>
+            <a href="/form/<%= form.id %>" class="btn btn-primary btn-block">Open Form</a>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <div class="alert alert-warning text-center">No forms available.</div>
+    <% } %>
+  </div>
+
+</body>
+</html>
