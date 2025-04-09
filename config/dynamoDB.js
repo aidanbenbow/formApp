@@ -87,3 +87,17 @@ const ddbClient = new DynamoDBClient({
             console.error("Error retrieving form data:", err);
         }
     };
+
+    //function to get all items from dynamoDB
+    export const getAllFormData = async () => {
+        const params = {
+            TableName: 'testdata'
+        };
+        try {
+            const data = await dynamoDB.send(new ScanCommand(params));
+            console.log("All form data retrieved successfully:", data);
+            return data;
+        } catch (err) {
+            console.error("Error retrieving form data:", err);
+        }
+    };

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Submitted Form Data</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .card {
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body class="bg-light">
+  <div class="container py-4">
+    <h2 class="text-center mb-4">Submitted Form Answers</h2>
+
+    <% if (answers && answers.length > 0) { %>
+      <% answers.forEach((entry, index) => { %>
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Form Entry <%= index + 1 %></h5>
+            <ul class="list-group list-group-flush">
+              <% Object.keys(entry).forEach(key => { %>
+                <% if (key !== 'id' && key !== 'formTable') { %>
+                  <li class="list-group-item">
+                    <strong><%= key %>:</strong> <%= entry[key] %>
+                  </li>
+                <% } %>
+              <% }) %>
+            </ul>
+            <small class="text-muted">Form ID: <%= entry.id %> | Table: <%= entry.formTable %></small>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p class="text-center text-muted">No answers available to display.</p>
+    <% } %>
+
+    <div class="text-center mt-4">
+      <a href="/allforms" class="btn btn-secondary">Back to All Forms</a>
+    </div>
+  </div>
+</body>
+</html>

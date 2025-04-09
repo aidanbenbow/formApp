@@ -28,6 +28,7 @@
             <h5 class="card-title"><%= form.fields[0] || 'Untitled Form' %></h5>
             <p class="card-text">Form ID: <%= form.id %></p>
             <a href="/form/<%= form.id %>" class="btn btn-primary btn-block">Open Form</a>
+            <a href="/answers/<%= form.id %>" class="btn btn-secondary btn-block">View Answers</a>
           </div>
         </div>
       <% }) %>

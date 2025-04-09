@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 
-import { saveFormData, getFormData, getOneFormData, saveFormData2 } from '../config/dynamoDB.js';
+import { saveFormData, getFormData, getOneFormData, saveFormData2, getAllFormData } from '../config/dynamoDB.js';
 
 router.get('/', (req, res) => {
     res.render('index');
@@ -48,9 +48,26 @@ router.get('/thankyou', (req, res) => {
     res.render('thankyou');
 });
 
+router.get('/answers/:formID', async (req, res) => {
+    const formID = req.params.formID;
+    try {
+        const data = await getAllFormData(formID);
+        const answers = data.Items;
+       // console.log('All answers retrieved:', answers);
+        if (answers) {
+            res.render('answers', { answers });
+        } else {
+            res.status(404).send('No answers found');
+        }
+    } catch (error) {
+        console.error('Error retrieving form data:', error);
+        res.status(500).send('Error retrieving form data');
+    }
+} );
+
 
     router.post('/submitted', async (req, res) => {
-       console.log('Form data received:', req.body);
+      // console.log('Form data received:', req.body);
         const formData = req.body;
 
         // Save the form data to DynamoDB
@@ -69,7 +86,7 @@ router.get('/thankyou', (req, res) => {
 
     router.post('/submit', async (req, res) => {
         const formData = req.body;
-        console.log('Form data received:', formData);
+       // console.log('Form data received:', formData);
 
         // Save the form data to DynamoDB
         try {

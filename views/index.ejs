@@ -38,17 +38,6 @@
       document.getElementById('form-fields').appendChild(field);
     }
 
-    // document.getElementById('dynamic-form').addEventListener('submit', async function(e) {
-    //   e.preventDefault();
-    //   const values = Array.from(document.getElementsByName('fields')).map(el => el.value);
-    //   const response = await fetch('/submit', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ fields: values }),
-    //   });
-    //   const result = await res.text();
-    //   document.getElementById('response').textContent = result.message;
-    // });
 
     // Initial field
     addField();
