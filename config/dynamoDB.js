@@ -1,5 +1,5 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, PutCommand, ScanCommand } from "@aws-sdk/lib-dynamodb";
+import { DynamoDBDocumentClient, PutCommand, ScanCommand, QueryCommand } from "@aws-sdk/lib-dynamodb";
 import pkg from '@aws-sdk/client-dynamodb'
 const { GetItemCommand } = pkg;
 import dotenv from "dotenv";
@@ -16,7 +16,7 @@ const ddbClient = new DynamoDBClient({
     //     accessKeyId: ACCESS_KEY,
     //     secretAccessKey: SECRET_KEY
     // }
-    });
+    })
 
     export const dynamoDB = DynamoDBDocumentClient.from(ddbClient)
     export const tableName = 'formSubmissions'
@@ -24,12 +24,13 @@ const ddbClient = new DynamoDBClient({
     // Function to save form data to DynamoDB
     export const saveFormData = async (formData) => {
         const params = {
-            TableName: formData.fields[1],
+            TableName: tableName,
             Item: {
                 id: uuidv4(),
                 ...formData
             }
         };
+       // console.log("Form data to be saved:", params);
         try {
             await dynamoDB.send(new PutCommand(params));
             console.log("Form data saved successfully:", formData);
@@ -38,14 +39,15 @@ const ddbClient = new DynamoDBClient({
         }
     };
 
-    export const saveFormData2 = async (formData) => {
+    export const saveFormDatatoTest = async (formData) => {
         const params = {
-            TableName: formData.formTable,
+            TableName: 'testdata',
             Item: {
                 id: uuidv4(),
                 ...formData
             }
         };
+       // console.log("Form data to be saved:", params);
         try {
             await dynamoDB.send(new PutCommand(params));
             console.log("Form data saved successfully:", formData);
@@ -81,7 +83,7 @@ const ddbClient = new DynamoDBClient({
         };
         try {
             const data = await dynamoDB.send(new ScanCommand(params));
-            console.log("Form data retrieved successfully:", data);
+           // console.log("Form data retrieved successfully:", data);
             return data;
         } catch (err) {
             console.error("Error retrieving form data:", err);
@@ -97,6 +99,25 @@ const ddbClient = new DynamoDBClient({
             const data = await dynamoDB.send(new ScanCommand(params));
             console.log("All form data retrieved successfully:", data);
             return data;
+        } catch (err) {
+            console.error("Error retrieving form data:", err);
+        }
+    };
+
+    export const getFormDataByFormId = async (formId) => {
+        const params = {
+            TableName: 'testdata',
+            IndexName: 'formId-index',  // Replace 'formId-index' with the actual name of your GSI
+            KeyConditionExpression: 'formId = :formId', // Querying based on formId using the GSI
+            ExpressionAttributeValues: {
+                ':formId': formId 
+            }
+        };
+    //console.log("Querying form data with formId:", params);
+        try {
+            const data = await dynamoDB.send(new QueryCommand(params));
+            console.log("Form data retrieved for formId:", formId, data.Items);
+            return data.Items;  // Returning the array of items
         } catch (err) {
             console.error("Error retrieving form data:", err);
         }

@@ -17,12 +17,12 @@
 </head>
 <body class="bg-light">
   <div class="container form-container">
-    <h2 class="text-center"><%= formData[0] %></h2> <!-- Title of the form -->
+    <h2 class="text-center"><%= formData[1] %></h2> <!-- Title of the form -->
    
 
     <form action="/submitted" method="post">
-        <input type="hidden" name="formTable" value="<%= formData[2] %>"> <!-- Hidden field for the title -->
-      <% formData.slice(3).forEach(function(field, index) { %>  <!-- Iterate over the rest of the fields for text areas -->
+        <input type="hidden" name="formId" value="<%= formData[0] %>"> <!-- Hidden field for the id -->
+      <% formData.slice(2).forEach(function(field, index) { %>  <!-- Iterate over the rest of the fields for text areas -->
         <div class="form-group">
           <label for="input<%= index %>"><%= field %></label> <!-- Field label -->
           <textarea class="form-control" id="input<%= index %>" name="input<%= index %>" rows="3"></textarea>

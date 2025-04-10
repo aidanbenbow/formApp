@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dynamic Form</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
 </head>
 <body class="bg-light">
   <div class="container mt-5">
@@ -12,15 +12,7 @@
     <a href="/allforms" class="btn btn-info mt-3 mb-4">📋 Show All Forms</a>
 
     <form id="dynamic-form" action="/submit" method="post">
-        
-      <div id="form-fields">
-        <div class="form-group">
-          <input type="text" class="form-control" name="fields" placeholder="title" /></div>
-        <div class="form-group">
-            <input type="text" class="form-control" name="fields" value="formSubmissions" readonly /></div>
-        <div class="form-group">
-            <input type="text" class="form-control" name="fields" placeholder="tosave" /></div>
-      </div>
+      <div id="form-fields"></div>
       <button type="button" class="btn btn-secondary my-3" onclick="addField()">+ Add Field</button>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
@@ -28,18 +20,20 @@
   </div>
 
   <script>
+    let fieldCount = 0;
+
     function addField() {
-      const fieldId = `field-${Date.now()}`;
+      const fieldId = `field-${fieldCount}`;
       const field = document.createElement('div');
       field.classList.add('form-group');
       field.innerHTML = `
-        <input type="text" class="form-control" name="fields" placeholder="Enter value" />
+        <input type="text" class="form-control" name="input${fieldCount}" placeholder="Enter value ${fieldCount + 1}" />
       `;
       document.getElementById('form-fields').appendChild(field);
+      fieldCount++;
     }
 
-
-    // Initial field
+    // Add an initial field
     addField();
   </script>
 </body>

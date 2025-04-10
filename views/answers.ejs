@@ -15,21 +15,24 @@
   <div class="container py-4">
     <h2 class="text-center mb-4">Submitted Form Answers</h2>
 
+    <h1>Random Answer</h1>
+  <p>Here is a randomly selected value for input0: <strong><%= random %></strong></p>
+
     <% if (answers && answers.length > 0) { %>
       <% answers.forEach((entry, index) => { %>
         <div class="card shadow-sm">
           <div class="card-body">
-            <h5 class="card-title">Form Entry <%= index + 1 %></h5>
+            <h5 class="card-title">Form Entry <%= entry.formId %></h5>
             <ul class="list-group list-group-flush">
               <% Object.keys(entry).forEach(key => { %>
-                <% if (key !== 'id' && key !== 'formTable') { %>
+                <% if (key !== 'id' && key !== 'formId') { %>
                   <li class="list-group-item">
                     <strong><%= key %>:</strong> <%= entry[key] %>
                   </li>
                 <% } %>
               <% }) %>
             </ul>
-            <small class="text-muted">Form ID: <%= entry.id %> | Table: <%= entry.formTable %></small>
+           
           </div>
         </div>
       <% }) %>
